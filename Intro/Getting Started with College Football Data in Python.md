@@ -1102,7 +1102,7 @@ off_plays[(off_plays['offense'] == 'LSU') & (off_plays['ppa'] < -4)][['offense',
 
 ## Conclusion
 
-I'm sure this is like drinking from a fire house. Let's go over what we covered:
+I'm sure this is like drinking from a fire hose. Let's go over what we covered:
 
 1. Setting up Python using Anaconda
 2. Installing new libraries
