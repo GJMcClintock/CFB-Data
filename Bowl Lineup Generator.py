@@ -4,8 +4,6 @@ import json
 from tqdm import tqdm as tqdm
 from scipy.stats import norm
 import itertools
-import urllib3
-urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # %% Get Games
 
@@ -14,7 +12,7 @@ game_req = []
 games = pd.DataFrame()
 for year in tqdm(years, desc = 'fetch bowl games to get teams'):
     parameters = {"year":year, "seasonType":"postseason"}
-    game_req = requests.get("https://api.collegefootballdata.com/games", params = parameters, verify=False)
+    game_req = requests.get("https://api.collegefootballdata.com/games", params = parameters)
     try:
         games = games.append(json.loads(game_req.text))
     except IndexError:
@@ -24,7 +22,7 @@ for year in tqdm(years, desc = 'fetch bowl games to get teams'):
 cur_games = pd.DataFrame()
 for year in tqdm(years, desc = 'fetch current season games'):
     parameters = {"year":year, "seasonType":"regular"}
-    game_req = requests.get("https://api.collegefootballdata.com/games", params = parameters, verify=False)
+    game_req = requests.get("https://api.collegefootballdata.com/games", params = parameters)
     try:
         cur_games = cur_games.append(json.loads(game_req.text))
     except IndexError:
@@ -43,7 +41,7 @@ for year in tqdm(years, desc = 'fetch reg season for past years'):
     continue
 for year in tqdm(years, desc = 'fetch past bowl games'):
     parameters = {"year":year, "seasonType":"postseason"}
-    game_req = requests.get("https://api.collegefootballdata.com/games", params = parameters, verify=False)
+    game_req = requests.get("https://api.collegefootballdata.com/games", params = parameters)
     try:
         reg_games = reg_games.append(json.loads(game_req.text))
     except IndexError:
@@ -56,7 +54,7 @@ sp_req = []
 sp_ratings = pd.DataFrame()
 for year in tqdm(years):
     parameters = {"year": year}
-    sp_req = requests.get("https://api.collegefootballdata.com/ratings/sp", params=parameters, verify=False)
+    sp_req = requests.get("https://api.collegefootballdata.com/ratings/sp", params=parameters)
     sp_ratings = sp_ratings.append(json.loads(sp_req.text))
     
 # clean up columns and remove the "National Averages"
